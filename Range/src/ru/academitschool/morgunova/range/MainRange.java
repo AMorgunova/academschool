@@ -20,6 +20,10 @@ public class MainRange {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите число");
         double a = scanner.nextDouble();
-        range.isInside(a);
+        if (range.isInside(a)) {
+            System.out.println("Данное число принадлежит диапазону");
+        } else {
+            System.out.println("Данное число не принадлежит диапазону");
+        }
     }
 }
