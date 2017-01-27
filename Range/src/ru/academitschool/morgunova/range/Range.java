@@ -18,6 +18,10 @@ public class Range {
         System.out.println("Интервал от " + from + " до " + to);
     }
 
+    public double getLength () {
+        return this.to - this.from;
+    }
+
     public double getFrom() {
         return from;
     }
