@@ -1,6 +1,5 @@
 package ru.academitschool.morgunova.range;
 
-
 import java.util.Scanner;
 
 /**
