@@ -15,7 +15,11 @@ public class Range {
     }
 
     public void print() {
-        System.out.println("Интервал от " + from + " до " + to);
+        System.out.printf("Интервал от %.2f до %.2f%n", from, to);
+    }
+
+    public double getLength() {
+        return this.to - this.from;
     }
 
     public double getFrom() {
