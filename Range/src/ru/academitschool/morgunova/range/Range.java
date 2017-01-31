@@ -1,13 +1,12 @@
 package ru.academitschool.morgunova.range;
 
-import java.io.PrintStream;
-
 /**
  * Created by DNS on 27.01.2017.
  */
 public class Range {
     private double from;
     private double to;
+
 
     public Range(double from, double to) {
         this.from = from;
@@ -40,5 +39,18 @@ public class Range {
 
     public boolean isInside(double a) {
         return a >= from && a <= to;
+    }
+
+    public Range getIntervalIntersection(double from1, double to1) {
+        if (from1 <= to) {
+            return new Range(from1, to);
+        } else if (from <= to1) {
+            return new Range(from, to1);
+        } else if (from1 >= from && to1 <= to) {
+            return new Range(from1, to1);
+        } else if (from >= from1 && to <= to1) {
+            return new Range(from, to);
+        }
+        return null;
     }
 }

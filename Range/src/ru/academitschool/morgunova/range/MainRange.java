@@ -25,5 +25,7 @@ public class MainRange {
         } else {
             System.out.println("Данное число не принадлежит диапазону");
         }
+
+        System.out.println(range.getIntervalIntersection(25, 58));
     }
 }
