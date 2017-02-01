@@ -42,9 +42,9 @@ public class Range {
     }
 
     public Range getIntersection(Range range) {
-        if (range.from <= this.to) {
+        if (range.from <= this.to && range.from > this.from) {
             return new Range(range.from, this.to);
-        } else if (this.from <= range.to) {
+        } else if (this.from <= range.to && this.from > range.from) {
             return new Range(this.from, range.to);
         } else if (range.from >= this.from && range.to <= this.to) {
             return new Range(range.from, range.to);
@@ -53,4 +53,20 @@ public class Range {
         }
         return null;
     }
+
+    public double[] getUnification(Range range1, Range range2) {
+        if (range2.from <= range1.to && range2.from > range1.from) {
+            return new double[]{range1.from, range2.to};
+        } else if (range1.from <= range2.to && range1.from > range2.from) {
+            return new double[]{range2.from, range1.to};
+        } else if (range2.from >= range1.from && range2.to <= range1.to) {
+            return new double[]{range1.from, range1.to};
+        } else if (range1.from >= range2.from && range1.to <= range2.to) {
+            return new double[]{range2.from, range2.to};
+        }
+        return new double[]{range1.from, range1.to, range2.from, range2.to};
+    }
+
 }
+
+
