@@ -25,7 +25,8 @@ public class MainRange {
         } else {
             System.out.println("Данное число не принадлежит диапазону");
         }
-
-        System.out.println(range.getIntervalIntersection(25, 58));
+        Range range1 = new Range(25, 70);
+        Range intersection = range.getIntersection(range1);
+        System.out.printf("Интервал от %.2f до %.2f%n", intersection.getFrom(), intersection.getTo());
     }
 }

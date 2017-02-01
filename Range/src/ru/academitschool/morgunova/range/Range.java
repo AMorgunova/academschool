@@ -41,15 +41,15 @@ public class Range {
         return a >= from && a <= to;
     }
 
-    public Range getIntervalIntersection(double from1, double to1) {
-        if (from1 <= to) {
-            return new Range(from1, to);
-        } else if (from <= to1) {
-            return new Range(from, to1);
-        } else if (from1 >= from && to1 <= to) {
-            return new Range(from1, to1);
-        } else if (from >= from1 && to <= to1) {
-            return new Range(from, to);
+    public Range getIntersection(Range range) {
+        if (range.from <= this.to) {
+            return new Range(range.from, this.to);
+        } else if (this.from <= range.to) {
+            return new Range(this.from, range.to);
+        } else if (range.from >= this.from && range.to <= this.to) {
+            return new Range(range.from, range.to);
+        } else if (this.from >= range.from && this.to <= range.to) {
+            return new Range(this.from, this.to);
         }
         return null;
     }
