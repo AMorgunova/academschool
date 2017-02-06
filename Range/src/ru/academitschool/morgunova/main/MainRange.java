@@ -1,4 +1,6 @@
-package ru.academitschool.morgunova.range;
+package ru.academitschool.morgunova.main;
+
+import ru.academitschool.morgunova.range.Range;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -31,10 +33,10 @@ public class MainRange {
         Range range2 = new Range(35, 100);
         Range range3 = new Range(150, 200);
         Range intersection = range1.getIntersection(range2);
+        System.out.println(range.getIntersection(range1).toString());
         System.out.printf("Интервал от %.2f до %.2f%n", intersection.getFrom(), intersection.getTo());
 
-        double[] unification = range.getUnification(range3, range2);
-        System.out.println(Arrays.toString(unification));
+
 
 
 

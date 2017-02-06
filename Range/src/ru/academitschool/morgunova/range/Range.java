@@ -7,7 +7,6 @@ public class Range {
     private double from;
     private double to;
 
-
     public Range(double from, double to) {
         this.from = from;
         this.to = to;
@@ -37,36 +36,34 @@ public class Range {
         this.to = to;
     }
 
+    public  String toString () {
+        return "Интервал от " + from +  " до " + to;
+    }
+
     public boolean isInside(double a) {
         return a >= from && a <= to;
     }
 
+    private static boolean isIntersection(Range range1, Range range2) {
+        if (range1.to < range2.from || range2.to < range1.from) {
+            return false;
+        }
+        return true;
+    }
+
     public Range getIntersection(Range range) {
-        if (range.from <= this.to && range.from > this.from) {
-            return new Range(range.from, this.to);
-        } else if (this.from <= range.to && this.from > range.from) {
-            return new Range(this.from, range.to);
-        } else if (range.from >= this.from && range.to <= this.to) {
-            return new Range(range.from, range.to);
-        } else if (this.from >= range.from && this.to <= range.to) {
-            return new Range(this.from, this.to);
+        if (!isIntersection(this, range)) {
+            return null;
         }
-        return null;
+        return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
     }
 
-    public double[] getUnification(Range range1, Range range2) {
-        if (range2.from <= range1.to && range2.from > range1.from) {
-            return new double[]{range1.from, range2.to};
-        } else if (range1.from <= range2.to && range1.from > range2.from) {
-            return new double[]{range2.from, range1.to};
-        } else if (range2.from >= range1.from && range2.to <= range1.to) {
-            return new double[]{range1.from, range1.to};
-        } else if (range1.from >= range2.from && range1.to <= range2.to) {
-            return new double[]{range2.from, range2.to};
+    public Range[] getUnion(Range range) {
+        if (!isIntersection(this, range)) {
+            return new Range[]{new Range(this.from, this.to), new Range(range.from, range.to)};
         }
-        return new double[]{range1.from, range1.to, range2.from, range2.to};
+        return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
     }
 
+    
 }
-
-
