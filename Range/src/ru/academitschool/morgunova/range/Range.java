@@ -36,8 +36,8 @@ public class Range {
         this.to = to;
     }
 
-    public  String toString () {
-        return "Интервал от " + from +  " до " + to;
+    public String toString() {
+        return "Интервал от " + from + " до " + to;
     }
 
     public boolean isInside(double a) {
@@ -45,10 +45,7 @@ public class Range {
     }
 
     private static boolean isIntersection(Range range1, Range range2) {
-        if (range1.to < range2.from || range2.to < range1.from) {
-            return false;
-        }
-        return true;
+        return !(range1.to < range2.from || range2.to < range1.from);
     }
 
     public Range getIntersection(Range range) {
@@ -65,5 +62,16 @@ public class Range {
         return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
     }
 
-    
+    public Range[] getDifference(Range range) {
+        if (!isIntersection(this, range)) {
+            return new Range[]{new Range(this.from, this.to)};
+        } else if (this.to < range.to && this.from < range.from) {
+            return new Range[]{new Range(this.from, range.from)};
+        } else if (range.to < this.to && range.from < this.from) {
+            return new Range[]{new Range(range.to, this.to)};
+        } else if (this.from < range.from && this.to > range.to) {
+            return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
+        }
+        return null;
+    }
 }
