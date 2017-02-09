@@ -39,7 +39,7 @@ public class MainRange {
         Range range8 = new Range(1, 13);
 
         Range intersection = range1.getIntersection(range2);
-        System.out.println(range.getIntersection(range1).toString());
+        System.out.println(range3.getIntersection(range1).toString());
         System.out.printf("Интервал от %.2f до %.2f%n", intersection.getFrom(), intersection.getTo());
         System.out.println();
 
@@ -57,7 +57,7 @@ public class MainRange {
         System.out.println(Arrays.toString(range6.getDifference(range7)));
         System.out.println(Arrays.toString(range7.getDifference(range6)));
         System.out.println(Arrays.toString(range7.getDifference(range8)));
-        System.out.println(Arrays.toString(range1.getDifference(range3)));
+        System.out.println(Arrays.toString(range3.getDifference(range1)));
         System.out.println(Arrays.toString(range5.getDifference(range6)));
         System.out.println(Arrays.toString(range6.getDifference(range5)));
     }

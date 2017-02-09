@@ -1,4 +1,5 @@
 package ru.academitschool.morgunova.range;
+
 /*xCre0t.d0b..DNS on 27.01.2017.
  */
 public class Range {
@@ -42,32 +43,32 @@ public class Range {
         return a >= from && a <= to;
     }
 
-    private static boolean isIntersection(Range range1, Range range2) {
-        return range1.to > range2.from || range2.to > range1.from;
+    private boolean isIntersection(Range range) {
+        return range.from < this.to || this.from < range.to;
     }
 
     public Range getIntersection(Range range) {
-        if (!isIntersection(this, range)) {
-            return null;
+        if (!isIntersection(range)) {
+            return  null;
         }
         return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
     }
 
     public Range[] getUnion(Range range) {
-        if (!isIntersection(this, range)) {
+        if (!isIntersection(range)) {
             return new Range[]{new Range(this.from, this.to), new Range(range.from, range.to)};
         }
         return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
     }
 
     public Range[] getDifference(Range range) {
-        if (!isIntersection(this, range)) {
+        if (!isIntersection(range)) {
             return new Range[]{new Range(this.from, this.to)};
-        } else if (this.to < range.to && this.from < range.from) {
+        } else if (this.to <= range.to && this.from < range.from) {
             return new Range[]{new Range(this.from, range.from)};
-        } else if (range.to < this.to && range.from < this.from) {
+        } else if (range.to < this.to && range.from <= this.from) {
             return new Range[]{new Range(range.to, this.to)};
-        } else if (this.from <= range.from && this.to >= range.to) {
+        } else if (this.from < range.from && this.to > range.to) {
             return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
         }
         return new Range[0];
