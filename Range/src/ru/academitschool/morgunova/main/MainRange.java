@@ -58,5 +58,7 @@ public class MainRange {
         System.out.println(Arrays.toString(range7.getDifference(range6)));
         System.out.println(Arrays.toString(range7.getDifference(range8)));
         System.out.println(Arrays.toString(range1.getDifference(range3)));
+        System.out.println(Arrays.toString(range5.getDifference(range6)));
+        System.out.println(Arrays.toString(range6.getDifference(range5)));
     }
 }

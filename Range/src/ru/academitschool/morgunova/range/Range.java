@@ -1,7 +1,5 @@
 package ru.academitschool.morgunova.range;
-
-/**
- * Created by DNS on 27.01.2017.
+/*xCre0t.d0b..DNS on 27.01.2017.
  */
 public class Range {
     private double from;
@@ -45,7 +43,7 @@ public class Range {
     }
 
     private static boolean isIntersection(Range range1, Range range2) {
-        return !(range1.to < range2.from || range2.to < range1.from);
+        return range1.to > range2.from || range2.to > range1.from;
     }
 
     public Range getIntersection(Range range) {
@@ -69,9 +67,9 @@ public class Range {
             return new Range[]{new Range(this.from, range.from)};
         } else if (range.to < this.to && range.from < this.from) {
             return new Range[]{new Range(range.to, this.to)};
-        } else if (this.from < range.from && this.to > range.to) {
+        } else if (this.from <= range.from && this.to >= range.to) {
             return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
         }
-        return null;
+        return new Range[0];
     }
 }
