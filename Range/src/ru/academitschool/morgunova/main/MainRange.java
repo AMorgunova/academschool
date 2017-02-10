@@ -38,8 +38,12 @@ public class MainRange {
         Range range7 = new Range(1, 13);
         Range range8 = new Range(1, 13);
 
+        if (range1.getIntersection(range3) == null) {
+            System.out.println("Пересечения нет");
+        } else System.out.println(range3.getIntersection(range1).toString());
+        System.out.println();
+
         Range intersection = range1.getIntersection(range2);
-        System.out.println(range3.getIntersection(range1).toString());
         System.out.printf("Интервал от %.2f до %.2f%n", intersection.getFrom(), intersection.getTo());
         System.out.println();
 

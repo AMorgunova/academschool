@@ -49,7 +49,7 @@ public class Range {
 
     public Range getIntersection(Range range) {
         if (!isIntersection(this, range)) {
-            return  null;
+            return null;
         }
         return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
     }
@@ -64,13 +64,14 @@ public class Range {
     public Range[] getDifference(Range range) {
         if (!isIntersection(this, range)) {
             return new Range[]{new Range(this.from, this.to)};
-        } else if (this.to <= range.to && this.from < range.from) {
+        } else if (this.from >= range.from && this.to <= range.to) {
+            return new Range[0];
+        } else if (this.from <= range.from && this.to <= range.to) {
             return new Range[]{new Range(this.from, range.from)};
-        } else if (range.to < this.to && range.from <= this.from) {
+        } else if (this.from >= range.from && this.to >= range.to) {
             return new Range[]{new Range(range.to, this.to)};
-        } else if (this.from < range.from && this.to > range.to) {
-            return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
         }
-        return new Range[0];
+        return new Range[]{new Range(this.from, range.from), new Range(range.to, this.to)};
     }
 }
+
