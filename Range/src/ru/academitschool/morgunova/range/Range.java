@@ -43,26 +43,26 @@ public class Range {
         return a >= from && a <= to;
     }
 
-    private boolean isIntersection(Range range) {
-        return range.from < this.to || this.from < range.to;
+    private static boolean isIntersection(Range range1, Range range2) {
+        return range2.from < range1.to && range1.from < range2.to;
     }
 
     public Range getIntersection(Range range) {
-        if (!isIntersection(range)) {
+        if (!isIntersection(this, range)) {
             return  null;
         }
         return new Range(Math.max(this.from, range.from), Math.min(this.to, range.to));
     }
 
     public Range[] getUnion(Range range) {
-        if (!isIntersection(range)) {
+        if (!isIntersection(this, range)) {
             return new Range[]{new Range(this.from, this.to), new Range(range.from, range.to)};
         }
         return new Range[]{new Range(Math.min(this.from, range.from), Math.max(this.to, range.to))};
     }
 
     public Range[] getDifference(Range range) {
-        if (!isIntersection(range)) {
+        if (!isIntersection(this, range)) {
             return new Range[]{new Range(this.from, this.to)};
         } else if (this.to <= range.to && this.from < range.from) {
             return new Range[]{new Range(this.from, range.from)};
