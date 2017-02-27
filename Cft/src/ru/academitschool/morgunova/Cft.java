@@ -2,8 +2,6 @@ package ru.academitschool.morgunova;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,38 +9,52 @@ import java.util.Scanner;
  */
 public class Cft {
 
-    public static int[] sortInserts(int[] a) {
-        for (int i = 1; i < a.length; i++) {
-            int temp = a[i];
-            int j;
-            for (j = i - 1; j >= 0 && a[j] > temp; j--) {
-                a[j + 1] = a[j];
-            }
-            a[j + 1] = temp;
-        }
-        return a;
-    }
-
     public static void main(String[] args) throws IOException {
-        try (PrintWriter printWriter = new PrintWriter("out.txt");
-             Scanner scanner = new Scanner(new FileInputStream("in.txt"))) {
-            ArrayList<String> list = new ArrayList<String>();
+        if (args.length != 4) {
+            System.out.println("Недостаточное количество аргументов");
+            return;
+        }
 
-            while (scanner.hasNextLine()) {
-                String s = scanner.nextLine();
-                list.add(s);
-            }
+        boolean isAscending = true;
+        if (args[3].equals("-a")) {
+            isAscending = true;
+        } else if (args[3].equals("-d")) {
+            isAscending = false;
+        } else {
+            //TODO выбросить исключение об остутствии аргумента
+        }
 
-            String[] str = list.toArray(new String[list.size()]);
-            int[] num = new int[str.length];
-            for (int i = 0; i < num.length; i++) {
-                num[i] = Integer.parseInt(str[i]);
-            }
+        boolean isWholeNumbers = true;
+        if (args[2].equals("-i")) {
+            isWholeNumbers = true;
+        } else if (args[2].equals("-s")) {
+            isAscending = false;
+        } else {
+            //TODO выбросить исключение об остутствии аргумента
+        }
 
-            for (int e : sortInserts(num)) {
-                printWriter.println(e);
+        try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
+             PrintWriter printWriter = new PrintWriter(args[1])) {
+
+            {
+                ArrayList<Integer> list = new ArrayList<>(100);
+                while (scanner.hasNextLine()) {
+                    list.add(scanner.nextInt());
+                }
+
+                if (isAscending) {
+                    InsertionSort.sort(list, new IntegerComparator());
+                    for (Integer e : list) {
+                        printWriter.println(e);
+                    }
+                } else {
+                    InsertionSort.sort(list, new IntegerComparator().reversed());
+                    for (Integer e : list) {
+                        printWriter.println(e);
+                    }
+                }
             }
         }
+
     }
 }
-
