@@ -16,27 +16,35 @@ public class Cft {
         }
 
         boolean isAscending = true;
-        if (args[3].equals("-a")) {
-            isAscending = true;
-        } else if (args[3].equals("-d")) {
-            isAscending = false;
-        } else {
-            //TODO выбросить исключение об остутствии аргумента
+        switch (args[3]) {
+            case "-a":
+                isAscending = true;
+                break;
+            case "-d":
+                isAscending = false;
+                break;
+            default:
+                //TODO выбросить исключение об остутствии аргумента
+                break;
         }
 
         boolean isWholeNumbers = true;
-        if (args[2].equals("-i")) {
-            isWholeNumbers = true;
-        } else if (args[2].equals("-s")) {
-            isAscending = false;
-        } else {
-            //TODO выбросить исключение об остутствии аргумента
+        switch (args[2]) {
+            case "-i":
+                isWholeNumbers = true;
+                break;
+            case "-s":
+                isWholeNumbers = false;
+                break;
+            default:
+                //TODO выбросить исключение об остутствии аргумента
+                break;
         }
 
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
              PrintWriter printWriter = new PrintWriter(args[1])) {
 
-            {
+            if (isWholeNumbers) {
                 ArrayList<Integer> list = new ArrayList<>(100);
                 while (scanner.hasNextLine()) {
                     list.add(scanner.nextInt());
@@ -44,17 +52,20 @@ public class Cft {
 
                 if (isAscending) {
                     InsertionSort.sort(list, new IntegerComparator());
-                    for (Integer e : list) {
-                        printWriter.println(e);
-                    }
+                    list.forEach(printWriter::println);
                 } else {
                     InsertionSort.sort(list, new IntegerComparator().reversed());
-                    for (Integer e : list) {
-                        printWriter.println(e);
-                    }
+                    list.forEach(printWriter::println);
                 }
+            } else {
+                ArrayList<String> list = new ArrayList<>(100);
+                while (scanner.hasNextLine()) {
+                    list.add(scanner.nextLine());
+                }
+
+                InsertionSort.sort(list, new StringComparator());
+                list.forEach(printWriter::println);
             }
         }
-
     }
 }
