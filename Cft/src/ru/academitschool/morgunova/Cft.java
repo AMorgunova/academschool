@@ -15,7 +15,7 @@ public class Cft {
             return;
         }
 
-        boolean isAscending = true;
+        boolean isAscending;
         switch (args[3]) {
             case "-a":
                 isAscending = true;
@@ -24,11 +24,13 @@ public class Cft {
                 isAscending = false;
                 break;
             default:
+                throw new NotFoundArgument("Данный аргумент отсутствует " + "\n"
+                        + "-a: Сортировка по возрастанию " + "\n"
+                        + "-d: Сортировка по убыванию");
                 //TODO выбросить исключение об остутствии аргумента
-                break;
         }
 
-        boolean isWholeNumbers = true;
+        boolean isWholeNumbers;
         switch (args[2]) {
             case "-i":
                 isWholeNumbers = true;
@@ -37,8 +39,9 @@ public class Cft {
                 isWholeNumbers = false;
                 break;
             default:
-                //TODO выбросить исключение об остутствии аргумента
-                break;
+                throw new NotFoundArgument("Данный аргумент отсутствует " + "\n"
+                        + "-i: Сортировка целых чисел " + "\n"
+                        + "-s: Сортировка строк");
         }
 
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
@@ -46,7 +49,7 @@ public class Cft {
 
             if (isWholeNumbers) {
                 ArrayList<Integer> list = new ArrayList<>(100);
-                while (scanner.hasNextLine()) {
+                while (scanner.hasNextInt()) {
                     list.add(scanner.nextInt());
                 }
 
@@ -63,8 +66,13 @@ public class Cft {
                     list.add(scanner.nextLine());
                 }
 
-                InsertionSort.sort(list, new StringComparator());
-                list.forEach(printWriter::println);
+                if (isAscending) {
+                    InsertionSort.sort(list, new StringComparator());
+                    list.forEach(printWriter::println);
+                } else {
+                    InsertionSort.sort(list, new StringComparator().reversed());
+                    list.forEach(printWriter::println);
+                }
             }
         }
     }
