@@ -15,33 +15,33 @@ public class Cft {
             return;
         }
 
-        boolean isAscending;
-        switch (args[3]) {
-            case "-a":
-                isAscending = true;
-                break;
-            case "-d":
-                isAscending = false;
-                break;
-            default:
-                throw new NotFoundArgument("Данный аргумент отсутствует " + "\n"
-                        + "-a: Сортировка по возрастанию " + "\n"
-                        + "-d: Сортировка по убыванию");
-                //TODO выбросить исключение об остутствии аргумента
-        }
+        boolean isAscending = true;
+        boolean isWholeNumbers = true;
 
-        boolean isWholeNumbers;
-        switch (args[2]) {
-            case "-i":
-                isWholeNumbers = true;
-                break;
-            case "-s":
-                isWholeNumbers = false;
-                break;
-            default:
-                throw new NotFoundArgument("Данный аргумент отсутствует " + "\n"
-                        + "-i: Сортировка целых чисел " + "\n"
-                        + "-s: Сортировка строк");
+        try {
+            switch (args[3]) {
+                case "-a":
+                    isAscending = true;
+                    break;
+                case "-d":
+                    isAscending = false;
+                    break;
+                default:
+                    throw new IncorrectSortingArgumentException("Данный аргумент отсутствует: -a: Сортировка по возрастанию -d: Сортировка по убыванию");
+            }
+
+            switch (args[2]) {
+                case "-i":
+                    isWholeNumbers = true;
+                    break;
+                case "-s":
+                    isWholeNumbers = false;
+                    break;
+                default:
+                    throw new IncorrectTypeArgumentException("Данный аргумент отсутствует: -i: Сортировка целых чисел -s: Сортировка строк");
+            }
+        } catch (IncorrectSortingArgumentException | IncorrectTypeArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
@@ -60,6 +60,7 @@ public class Cft {
                     InsertionSort.sort(list, new IntegerComparator().reversed());
                     list.forEach(printWriter::println);
                 }
+
             } else {
                 ArrayList<String> list = new ArrayList<>(100);
                 while (scanner.hasNextLine()) {
